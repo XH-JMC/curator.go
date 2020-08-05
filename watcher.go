@@ -7,7 +7,7 @@ import (
 )
 
 type Watcher interface {
-	process(event *zk.Event)
+	Process(event *zk.Event)
 }
 
 type simpleWatcher struct {
@@ -18,7 +18,7 @@ func NewWatcher(fn func(event *zk.Event)) Watcher {
 	return &simpleWatcher{fn}
 }
 
-func (w *simpleWatcher) process(event *zk.Event) {
+func (w *simpleWatcher) Process(event *zk.Event) {
 	w.Func(event)
 }
 
@@ -61,7 +61,7 @@ func (w *Watchers) Remove(watcher Watcher) Watcher {
 func (w *Watchers) Fire(event *zk.Event) {
 	for _, watcher := range w.watchers {
 		if watcher != nil {
-			go watcher.process(event)
+			go watcher.Process(event)
 		}
 	}
 }

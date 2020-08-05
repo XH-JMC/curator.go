@@ -260,7 +260,7 @@ func (s *connectionState) checkTimeout() error {
 	return nil
 }
 
-func (s *connectionState) process(event *zk.Event) {
+func (s *connectionState) Process(event *zk.Event) {
 	//log.Printf("connectionState.process received %v with %d watchers", event, s.parentWatchers.Len())
 
 	for _, watcher := range s.parentWatchers.watchers {
@@ -269,7 +269,7 @@ func (s *connectionState) process(event *zk.Event) {
 
 			defer tracer.Commit()
 
-			watcher.process(event)
+			watcher.Process(event)
 		}()
 	}
 
